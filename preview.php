@@ -1,6 +1,7 @@
 <?php
 session_start();
-
+//中文乱码
+header("Content-type: text/html; charset=utf-8");
 $type = 0;
 if (!empty($_GET) && array_key_exists("type", $_GET)) {
   $type = $_GET["type"];

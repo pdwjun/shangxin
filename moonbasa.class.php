@@ -20,7 +20,7 @@ class Moonbasa {
       $url= str_replace( 'www.korirl.com', 'www.alaves.cn', $url );
       $parser = new ParseAlaves();
       $retMap = $parser->parse($url);
-
+    //以下域名 几乎不会再用
     } else if (strpos($url, 'www.rutisher.com') > 0) {
       $parser = new ParseRutisher();
       $retMap = $parser->parse($url);
@@ -58,9 +58,13 @@ class ParseLady {
     $dom = file_get_html($url);
     $this->parseCodeAndPrice($dom);    
     $this->parseSizeAndColor($dom);    
-    $this->parseProps($dom);    
-    $this->parseImg($dom);    
-    $this->parseProductImg($dom);    
+    $this->parseProps($dom);
+
+      //商品详情旁边的图片
+    $this->parseImg($dom);
+      //模特效果图
+    $this->parseProductImg($dom);
+      //商品图片
     $this->parseSizeTable($dom);    
     $this->parseTryTable($dom);    
 
@@ -70,6 +74,7 @@ class ParseLady {
   public function parseCodeAndPrice($dom) {
     // code
     $code = '';
+      //p_info，商品一些参数
     $infoEle = $dom->find('div.p_info', 0);
     $h2Ele = $infoEle->find('h2', 0);
     if (!empty($h2Ele)) {
@@ -209,7 +214,11 @@ class ParseLady {
 //      $detailImagesEle = $detailEle->nextSibling()->nextSibling();
 //      $productImagesEle = $detailImagesEle->nextSibling();
 //    }
+
+      //一般商品上半部分是商品图片，下半部分是模特效果图
+      //商品图片，商品细节，很多图片上下无缝拼合而成
       $detailImagesEle = $dom->find('div.sunProject',0);
+      //模特效果图，一张一张，最后用table 2张一排显示出来
       $productImagesEle = $dom->find('div.detail_destrct',0);
 
       $productImageList = array();
